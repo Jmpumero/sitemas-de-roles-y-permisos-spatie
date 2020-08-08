@@ -87,6 +87,8 @@ class ProductoController extends Controller
 
 
             return response()->json(['success' => 'Data Added successfully.']);
+        }else {
+            return redirect()->back()->withInput();
         }
 
     }
