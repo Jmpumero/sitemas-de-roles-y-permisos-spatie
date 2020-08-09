@@ -36,31 +36,21 @@
            <div class="modal-body">
             <span id="form_result"></span>
 
-            <form method="post" id="sample_form" class="form-horizontal">
-
-             <div class="form-group">
-               <label class="control-label col-md-4" >Nombre: </label>
-               <div class="col-md-8">
-                <input type="text" name="nombre" id="nombre" class="form-control" />
-               </div>
-              </div>
-              <div class="form-group">
-               <label class="control-label col-md-4">Precio: </label>
-               <div class="col-md-8">
-                <input type="text" name="precio" id="precio" class="form-control" />
-               </div>
 
 
-              </div>
-                   <br />
-                   <div class="form-group" >
-                    <input type="hidden" name="action" id="action" value="Añadir" />
-                    <input type="hidden" name="hidden_id" id="hidden_id" />
-                    <input type="submit" name="action_button" id="action_button" class="btn btn-primary" value="Añadir" />
-                   </div>
-            </form>
-
-
+            {!! Form::open(['id' => 'sample_form']) !!}
+            <div class="form-group">
+                {{ Form::label('nombre', 'Nombre del Producto') }}
+                {{ Form::text('nombre', null, ['class' => 'form-control', 'id' => 'nombre']) }}
+            </div>
+            <div class="form-group">
+                {{ Form::label('precio', 'Precio') }}
+                {{ Form::text('precio', null, ['class' => 'form-control', 'id' => 'precio']) }}
+            </div>
+            <div class="form-group">
+                {{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-primary','id' => 'btn_enviar']) }}
+            </div>
+            {!! Form::close() !!}
 
            </div>
         </div>
@@ -182,8 +172,8 @@
             $('#sample_form').on('submit', function(event){
                 event.preventDefault();
                 var action_url = '';
-
-                if($('#action').val() == 'Añadir')
+                //console.log("entro")
+                if($('#btn_enviar').val() == 'Guardar')
                 {
                 action_url = "{{ route('productos.store') }}";
                 }
@@ -193,8 +183,8 @@
                 action_url = "{{ route('productos.update') }}";
                 }
 
-                console.log(action_url);
-                console.log($(this).serialize());
+                //console.log(action_url);
+
                 $.ajax({
                         url: action_url,
                         method:"POST",

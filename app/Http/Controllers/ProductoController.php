@@ -69,10 +69,18 @@ class ProductoController extends Controller
             $rules = array(
                 //valida que el campo sea unico en la tabla
                 'nombre'     =>  'required|unique:productos',
-                'precio'     =>  'required'
+                'precio'     =>  'required|numeric'
             );
 
-            $error = Validator::make($request->all(), $rules);
+
+            $messages = [
+                'nombre.required' => 'El campo nombre no puede estar vacio.',
+                'nombre.unique' =>'El nombre del producto  ya se encuentra registrado.',
+                'precio.required' => 'Agrega un precio al producto.',
+                'precio.numeric' => 'El precio debe ser un número'
+            ];
+
+            $error = Validator::make($request->all(), $rules,$messages);
 
             if($error->fails())
             {
@@ -87,6 +95,8 @@ class ProductoController extends Controller
 
 
             return response()->json(['success' => 'Data Added successfully.']);
+        }else {
+            return redirect()->back()->withInput();
         }
 
     }
