@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://rimorsoft.com/">Rimorsoft Online</a>
+                    <a href="#">Usando:Spatie,laravel collective,Jquery datatable</a>
                 </div>
             </div>
         </div>
