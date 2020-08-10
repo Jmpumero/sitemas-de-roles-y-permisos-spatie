@@ -1,0 +1,71 @@
+Paso 1:
+Dentro de la carpeta principal del proyecto se crea el archivo "Procfile" que contiene la linea web: vendor/bin/heroku-php-apache2 public/
+o tambien se puede ejecuatar por terminal el comando: echo web: vendor/bin/heroku-php-apache2 public/ > Procfile
+
+Paso 2:
+Se ejecuta el comando heroku create
+
+
+
+NOTA:para evitar un posible error de permisos(403) mas adelante se debe modificar el archivo composer.json en el apartado de scripts
+"post-install-cmd": [
+            "php artisan clear-compiled",
+            "chmod -R 777 public/"
+        ]
+
+Paso3:
+Se ejecuta git push heroku master
+nota:
+Si se va hacer un deploy desde una branch del proyecto  que no es el master entonces se debe ejecutar el comando:git heroku nombre-de-la-branch-que-no-es-master:master
+
+Paso 4:
+Procedemos a configurar las variables de entorno, se puede hacer ya sea desde el navegador por la pagina principal de heroku o por terminal
+
+Por terminal detallada:
+Por terminal se ejecutan el comando: heroku config:add NOMBRE_DE_LA_VARIABLE_DE_ENTORNO=valor esto con cada variable del archivo .env
+ejemplo para este proyecto seria:
+heroku config:add APP_NAME=Laravel
+heroku config:add APP_ENV=Production
+heroku config:add APP_KEY=base64:clave incriptada que esta en el archivo .env
+heroku config:add APP_DEBUG=true
+heroku config:add APP_URL=https://limitless-temple-11622.herokuapp.com/  nota: para este caso esta URL fue la que genera heroku al principio en el paso 3
+
+
+otra forma  simple(no he probado):
+heroku config:set APP_KEY=base64: clave incriptada que ya mencione mas arriba
+
+Paso 5: Añadir base de datos
+ejecutamos para instalar la bd de postgresql(es la free)
+heroku addons:create heroku-postgresql:hobby-dev
+
+luego heroku pg:credentials:url  con esto obtenemos las credenciales apra poder configurar las variables de bd
+
+heroku config:add DB_CONNECTION=pgsql
+heroku config:add DB_HOST=ec2-54-236-169-55.compute-1.amazonaws.com
+heroku config:add DB_PORT=5432
+heroku config:add DB_DATABASE=d3sfhbg7kcjh0r
+heroku config:add DB_USERNAME=wpnvymxkwrbxwx
+heroku config:add DB_PASSWORD=f0b0357831547cd896a924bb1ab2c9c3e2479ec570259dd270c9c349b951ec18
+
+Paso 6: migraciones
+Ahora a llenar la bd con migraciones
+
+primero verificar que el archivo .env este configurado en remoto en este caso
+asi:
+DB_CONNECTION=pgsql
+DB_HOST=ec2-54-236-169-55.compute-1.amazonaws.com
+DB_PORT=5432
+DB_DATABASE=d3sfhbg7kcjh0r
+DB_USERNAME=wpnvymxkwrbxwx
+DB_PASSWORD=f0b0357831547cd896a924bb1ab2c9c3e2479ec570259dd270c9c349b951ec18
+
+
+
+IMPORTANTE: ir al archivo composer.json y mover  "fzaninotto/faker" of "require-dev" for "require" y se ejecuta el Paso 3 esto se realiza 1 vez
+
+Ahora cada vez que se realize una migracion
+heroku run bash
+composer install       (los pasos previos hasta aqui es para que "reconozca" la libreria Faker,usada en las migraciones)
+php artisan migrate --seed  o  php artisan migrate:refresh --seed
+
+para salir del bash escribir exit
