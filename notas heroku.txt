@@ -70,3 +70,4 @@ composer install       (los pasos previos hasta aqui es para que "reconozca" la 
 php artisan migrate --seed  o  php artisan migrate:refresh --seed
 
 para salir del bash escribir exit
+ fin
