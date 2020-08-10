@@ -61,7 +61,8 @@ DB_PASSWORD=f0b0357831547cd896a924bb1ab2c9c3e2479ec570259dd270c9c349b951ec18
 
 
 
-IMPORTANTE: ir al archivo composer.json y mover  "fzaninotto/faker" of "require-dev" for "require" y se ejecuta el Paso 3 esto se realiza 1 vez
+IMPORTANTE: ir al archivo composer.json y mover  "fzaninotto/faker" of "require-dev" for "require" luego hacer un composer update
+y se ejecuta el Paso 3 esto se realiza 1 vez
 
 Ahora cada vez que se realize una migracion
 heroku run bash
