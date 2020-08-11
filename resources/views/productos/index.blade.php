@@ -65,9 +65,6 @@
    <!--Jquery-->
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<!--datatable jquery-->
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 
 <script>
@@ -91,6 +88,23 @@
 
                 {data: 'action', name: 'btn', orderable: false, searchable: false},
             ],
+
+            rowCallback: function(row, data, index){
+  	            if(data.nombre== 'ajo'){
+    	            $(row).find('td').css('background', '#24e695');
+                }
+
+                if(data.precio< 6){
+    	            $(row).find('td').css('background', '#dfd111');
+                }
+
+                if(data.precio== 12){
+    	            $(row).find('td:eq(2)').css('background', '#FF99FF');
+                }
+            },
+
+
+
             "language": {
                 "info": "_TOTAL_ registros",
                 "search": "Buscar",
@@ -112,8 +126,6 @@
             }
         });
 
-
-
     $('body').on('click', '#btn-eliminar', function () {
 
         var producto_id = $(this).data("id");
@@ -132,6 +144,10 @@
             }
         })
     });
+
+
+
+
 
 
     $('#nuevo_producto').click(function(){
